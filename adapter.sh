@@ -12,11 +12,10 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-REVISION=1.52
-VERSION="v0.35/$REVISION"
+VERSION="1.514"
 VERSIONSTRING="\
 Adapter adapts .spec files for PLD Linux.
-$VERSION (C) 1999-2013 Free Penguins".
+v$VERSION (C) 1999-2016 Free Penguins".
 
 PROGRAM=${0##*/}
 dir=$(d=$0; [ -L "$d" ] && d=$(readlink -f "$d"); dirname "$d")
@@ -246,8 +245,6 @@ import_rpm_macros() {
 	export _cvsmaildomain='%{?_cvsmaildomain}%{!?_cvsmaildomain:@pld-linux.org}'
 	export _cvsmailfeedback='%{?_cvsmailfeedback}%{!?_cvsmailfeedback:PLD Team <feedback@pld-linux.org>}'
 	"
-
-	export ADAPTER_REVISION=$REVISION
 
 	eval $(rpm --eval "$(echo -e $eval_expr)")
 }

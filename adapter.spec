@@ -23,8 +23,14 @@ cp -p %{SOURCE0} %{SOURCE1} .
 
 %{__sed} -i -e 's,^adapter=.*/adapter.awk,adapter=%{_libdir}/adapter.awk,' adapter.sh
 
-%{__sed} -i -e '/^VERSION=/s,\([^/]\+\)/.*",\1-RELEASE",' adapter.sh
-%{__sed} -i -e '/\tRCSID =/,/^\trev =/d;/\tVERSION = /s,\([^/]\+\)/.*,\1-RELEASE",' adapter.awk
+%build
+die() { echo >&2 "$*"; exit 1; }
+for f in adapter.sh adapter.awk; do
+	v=$(sed -rne 's/.*VERSION="([^"]+)".*/\1/p' $f)
+	if [ "$v" != "%{version}" ]; then
+		die "VERSION not %{version} in $f"
+	fi
+done
 
 %install
 rm -rf $RPM_BUILD_ROOT

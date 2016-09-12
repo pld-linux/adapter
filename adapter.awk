@@ -33,8 +33,7 @@ BEGIN {
 	RPM_SECTIONS = "package|build|changelog|clean|description|install|post|posttrans|postun|pre|prep|pretrans|preun|triggerin|triggerpostun|triggerun|verifyscript|check"
 	SECTIONS = "^%(" RPM_SECTIONS ")"
 
-	rev = "1.514"
-	VERSION = "0.36/" rev
+	VERSION="1.514"
 
 	PREAMBLE_TAGS = "(R|BR|Summary|Name|Version|Release|Epoch|License|Group|URL|BuildArch|BuildRoot|Obsoletes|Conflicts|Provides|ExclusiveArch|ExcludeArch|Pre[Rr]eq|(Build)?Requires|Suggests|Auto(Req|Prov))"
 
@@ -1950,14 +1949,6 @@ function import_rpm_macros(  v) {
 
 	if (!topdir) {
 		print "adapter.awk should not not be invoked directly, but via adapter script" > "/dev/stderr"
-		do_not_touch_anything = 1
-		exit(rc = 1)
-	}
-
-	# update this version dep each time some new macro export is added
-	v = 1.52
-	if (!ENVIRON["ADAPTER_REVISION"] || ENVIRON["ADAPTER_REVISION"] < v) {
-		printf("adapter shell script is outdated: Need %s, got %s. Please update it.\n", v, ENVIRON["ADAPTER_REVISION"]) > "/dev/stderr"
 		do_not_touch_anything = 1
 		exit(rc = 1)
 	}
