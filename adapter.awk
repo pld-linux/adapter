@@ -440,11 +440,11 @@ function b_makekey(a, b,	s) {
 	$0 = fixedsub("libtoolize --force --copy", "%{__libtoolize}", $0)
 	$0 = fixedsub("libtoolize -c -f --automake", "%{__libtoolize}", $0)
 
-	sub(/^aclocal$/, "%{__aclocal}")
-	sub(/^autoheader$/, "%{__autoheader}")
-	sub(/^autoconf$/, "%{__autoconf}")
+	sub(/^aclocal( --force)?$/, "%{__aclocal}")
+	sub(/^(%{_bindir}\/)?autoheader( --force)?$/, "%{__autoheader}")
+	sub(/^(%{_bindir}\/)?autoconf( --force)?$/, "%{__autoconf}")
 	sub(/^automake$/, "%{__automake}")
-	sub(/^libtoolize$/, "%{__libtoolize}")
+	sub(/^libtoolize( --copy --force)?$/, "%{__libtoolize}")
 
 	# atrpms
 	$0 = fixedsub("%perl_configure", "%{__perl} Makefile.PL \\\n\tINSTALLDIRS=vendor", $0)
@@ -1339,6 +1339,7 @@ function use_macros()
 	gsub(php_data_dir, "%{php_data_dir}")
 	gsub("%{_datadir}/php", "%{php_data_dir}")
 	gsub("%{php_home}", "%{php_data_dir}")
+	gsub("%{phpdir}", "%{php_data_dir}")
 	gsub("%{php_extdir}", "%{php_extensiondir}")
 
 	# change to %{_datadir}, with some exceptions
