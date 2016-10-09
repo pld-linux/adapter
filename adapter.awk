@@ -284,6 +284,9 @@ function b_makekey(a, b,	s) {
 		format_indent = -1
 	}
 
+	# try ASCII quotes and apostrophes
+	gsub(/’/, "'")
+
 	# Format description
 	if (ENVIRON["SKIP_DESC"] != 1 && description == 1 && !/^%[a-z]+/ && !/^%description/) {
 		if (/^[ \t]*$/) {
@@ -1167,6 +1170,8 @@ function use_macros()
 
 	sub("%py2_build", "%py_build")
 	sub("%py2_install", "%py_install")
+	sub("%{py2_build}", "%py_build")
+	sub("%{py2_install}", "%py_install")
 
 	gsub(infodir, "%{_infodir}")
 
@@ -2356,6 +2361,7 @@ function replace_requires(field,   pkg) {
 	sub(/^gnome-python2-gconf$/, "python-gnome-gconf", $2)
 	sub(/^gnome-python2-gnomekeyring$/, "python-gnome-desktop-keyring", $2)
 	sub(/^gnome-python2-gtkspell$/, "python-gnome-extras-gtkspell", $2)
+	sub(/^gstreamer-python$/, "python-gstreamer", $2)
 	sub(/^gtk-sharp2-devel$/, "dotnet-gtk-sharp2-devel", $2)
 	sub(/^gtk2$/, "gtk+2", $2)
 	sub(/^gtk2-devel$/, "gtk+2-devel", $2)
@@ -2455,6 +2461,7 @@ function replace_requires(field,   pkg) {
 	sub(/^python-zope-interface$/, "Zope-Interface", $2)
 	sub(/^python-zope.component$/, "Zope-Component", $2)
 	sub(/^python-zope.interface$/, "Zope-Interface", $2)
+	sub(/^python2-certifi$/, "python-certifi", $2)
 	sub(/^python2-devel$/, "python-devel", $2)
 	sub(/^python3-docker-py$/, "python3-docker", $2)
 	sub(/^pytz$/, "python-pytz", $2)
@@ -2476,6 +2483,7 @@ function replace_requires(field,   pkg) {
 	sub(/^xapian-bindings-python$/, "python-xapian", $2)
 	sub(/^xorg-x11-proto-devel$/, "xorg-proto-xproto-devel", $2)
 	sub(/^xorg-x11-server-sdk$/, "xorg-xserver-server-devel", $2)
+	sub(/^xorg-x11-server-utils$/, "xorg-app-iceauth xorg-app-rgb xorg-app-sessreg xorg-app-xgamma xorg-app-xhost xorg-app-xinput xorg-app-xkill xorg-app-xmodmap xorg-app-xrandr xorg-app-xrandr xorg-app-xrefresh xorg-app-xset xorg-app-xsetpointer xorg-app-xsetroot xorg-app-xstdcmap", $2)
 	# }}}
 
 	# {{{ mandriva
@@ -2541,9 +2549,10 @@ function replace_requires(field,   pkg) {
 
 	# {{{ suse/opensuse
 	sub(/^alsa-devel$/, "alsa-lib-devel", $2)
-	sub(/^python-djangorestframework$/, "python-django-rest-framework", $2)
-	sub(/^python-django_compressor$/, "python-django-compressor", $2)
+	sub(/^binutils-gold$/, "binutils", $2)
 	sub(/^bitstream-vera$/, "fonts-TTF-bitstream-vera", $2)
+	sub(/^dbus-1-devel$/, "dbus-devel", $2)
+	sub(/^gconf2-devel$/, "GConf2-devel", $2)
 	sub(/^gtk-sharp2$/, "dotnet-gtk-sharp2", $2)
 	sub(/^gtkmm2-devel$/, "gtkmm-devel", $2)
 	sub(/^libexpat-devel$/, "expat-devel", $2)
@@ -2552,11 +2561,15 @@ function replace_requires(field,   pkg) {
 	sub(/^libopenssl-devel$/, "openssl-devel", $2)
 	sub(/^libpulse-devel$/, "pulseaudio-devel", $2)
 	sub(/^libqt4-devel$/, "qt4-build, qt4-qmake, QtCore-devel", $2)
+	sub(/^llvm-clang$/, "clang", $2)
 	sub(/^monodoc-core$/, "mono-monodoc", $2)
+	sub(/^mozilla-nss-devel$/, "nss-devel", $2)
 	sub(/^python-Babel$/, "python-babel", $2)
 	sub(/^python-Django$/, "python-django", $2)
 	sub(/^python-Pillow$/, "python-pillow", $2)
 	sub(/^python-cairo$/, "python-pycairo", $2)
+	sub(/^python-django_compressor$/, "python-django-compressor", $2)
+	sub(/^python-djangorestframework$/, "python-django-rest-framework", $2)
 	sub(/^python-gobject$/, "python-pygobject", $2)
 	sub(/^python-gstreamer-0_10$/, "python-gstreamer", $2)
 	sub(/^python-gtk$/, "python-pygtk-gtk", $2)
