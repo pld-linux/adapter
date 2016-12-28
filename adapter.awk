@@ -286,6 +286,7 @@ function b_makekey(a, b,	s) {
 
 	# try ASCII quotes and apostrophes
 	gsub(/’/, "'")
+	gsub(/—/, " - ")
 
 	# Format description
 	if (ENVIRON["SKIP_DESC"] != 1 && description == 1 && !/^%[a-z]+/ && !/^%description/) {
