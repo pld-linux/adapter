@@ -2,7 +2,7 @@
 #
 # Adapter adapts .spec files for PLD Linux.
 #
-# Copyright (C) 1999-2016 PLD-Team <feedback@pld-linux.org>
+# Copyright (C) 1999-2017 PLD-Team <feedback@pld-linux.org>
 # Authors:
 # 	Michał Kuratczyk <kura@pld.org.pl>
 # 	Sebastian Zagrodzki <s.zagrodzki@mimuw.edu.pl>
@@ -45,6 +45,9 @@ BEGIN {
 
 	b_idx = 0		# index of BR/R arrays
 	BR_count = 0	# number of additional BuildRequires
+
+	# %global defines
+	globals["nil"] = ""
 
 	# If variable removed, then 1 (for removing it from export)
 	removed["LDFLAGS"] = 0
@@ -140,6 +143,11 @@ function b_makekey(a, b,	s) {
 		print $0
 		next
 	}
+}
+
+# load globals
+/^%global/ {
+	globals[$2] = $3;
 }
 
 /^%define/ {
@@ -1870,6 +1878,13 @@ function demacroize(str)
 	}
 	if (subver) {
 		sub("%{subver}", subver, str)
+	}
+
+	if (globals["gh_owner"]) {
+		sub("%{gh_owner}", globals["gh_owner"], str)
+	}
+	if (globals["gh_project"]) {
+		sub("%{gh_project}", globals["gh_project"], str)
 	}
 	return str
 }
