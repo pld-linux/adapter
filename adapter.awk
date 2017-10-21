@@ -1515,6 +1515,12 @@ function use_macros()
 		add_br("BuildRequires:  rpmbuild(macros) >= 1.300")
 	}
 
+	if (/^%meson / || /^%{meson}/) {
+		sub(/^meson/, "%meson")
+		sub(/^%{meson}/, "%meson")
+		add_br("BuildRequires:  rpmbuild(macros) >= 1.726")
+	}
+
 	$0 = fixedsub("%(%{__cc} -dumpversion)", "%{cc_version}", $0)
 	$0 = fixedsub("%(%{__cxx} -dumpversion)", "%{cxx_version}", $0)
 
