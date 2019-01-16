@@ -380,7 +380,7 @@ function b_makekey(a, b,	s) {
 	}
 
 	# invalid in %prep
-	sub("^rm -rf \$RPM_BUILD_ROOT.*", "")
+	sub("^rm -rf \\$RPM_BUILD_ROOT.*", "")
 }
 
 ##########
@@ -488,7 +488,7 @@ function b_makekey(a, b,	s) {
 	sub("^%{__rm} -rf %{buildroot}", "rm -rf $RPM_BUILD_ROOT")
 	sub("%buildroot", "$RPM_BUILD_ROOT")
 	sub("%{buildroot}", "$RPM_BUILD_ROOT")
-	sub("%{\?buildroot}", "$RPM_BUILD_ROOT")
+	sub("%{\\?buildroot}", "$RPM_BUILD_ROOT")
 
 	if (/^[ \t]*rm([ \t]+-[rf]+)*[ \t]+(\${?RPM_BUILD_ROOT}?|%{?buildroot}?)/ && did_rmroot==0) {
 		did_rmroot=1
@@ -507,7 +507,7 @@ function b_makekey(a, b,	s) {
 	}
 
 	if (!/%{_lib}/) {
-		sub("\$RPM_BUILD_ROOT/%", "$RPM_BUILD_ROOT%")
+		sub("\\$RPM_BUILD_ROOT/%", "$RPM_BUILD_ROOT%")
 	}
 
 	use_macros()
@@ -565,15 +565,15 @@ function b_makekey(a, b,	s) {
 	preamble = 0
 
 	if (gsub("/usr/sbin/useradd", "%useradd")) {
-		sub(" 2> /dev/null \|\| :", "")
-		sub(" >/dev/null 2>&1 \|\|:", "")
+		sub(" 2> /dev/null \\|\\| :", "")
+		sub(" >/dev/null 2>&1 \\|\\|:", "")
 	}
 
 	# fedora extras macros
 	if (/%__fe_useradd/) {
 		sub("%__fe_useradd", "%useradd -u ")
-		sub(" 2> /dev/null \|\| :", "")
-		sub(" >/dev/null 2>&1 \|\|:", "")
+		sub(" 2> /dev/null \\|\\| :", "")
+		sub(" >/dev/null 2>&1 \\|\\|:", "")
 		sub(" &>/dev/null \\|\\| :", "")
 	}
 
@@ -599,7 +599,7 @@ function b_makekey(a, b,	s) {
 
 	sub("update-desktop-database &> /dev/null \\|\\| :", "%update_desktop_database")
 	sub("touch --no-create %{_datadir}/icons/hicolor", "%update_icon_cache_post hicolor")
-	sub("if \\[ -x %{_bindir}/gtk-update-icon-cache \\]; then\n\t%{_bindir}/gtk-update-icon-cache -q %{_datadir}/icons/hicolor \|\| :\nfi", "")
+	sub("if \\[ -x %{_bindir}/gtk-update-icon-cache \\]; then\n\t%{_bindir}/gtk-update-icon-cache -q %{_datadir}/icons/hicolor \\|\\| :\nfi", "")
 
 	sub("export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`", "")
 	if (/gconftool-2 --makefile-install-rule/) {
@@ -1339,7 +1339,7 @@ function use_macros()
 			continue
 		if ($c ~ sysconfdir "/apm")
 			continue
-		if ($c ~ sysconfdir "/modules-load\.d")
+		if ($c ~ sysconfdir "/modules-load\\.d")
 			continue
 		gsub(sysconfdir, "%{_sysconfdir}", $c)
 	}
@@ -1475,7 +1475,7 @@ function use_macros()
 	gsub("%optflags", "%{rpmcflags}")
 	gsub("%{compat_perl_vendorarch}", "%{perl_vendorarch}")
 
-	gsub("^%{__make} install DESTDIR=\$RPM_BUILD_ROOT", "%{__make} install \\\n\tDESTDIR=$RPM_BUILD_ROOT")
+	gsub("^%{__make} install DESTDIR=\\$RPM_BUILD_ROOT", "%{__make} install \\\n\tDESTDIR=$RPM_BUILD_ROOT")
 	gsub("^fix-info-dir$", "[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>\\&1")
 	$0 = fixedsub("%buildroot", "$RPM_BUILD_ROOT", $0)
 	$0 = fixedsub("%{buildroot}", "$RPM_BUILD_ROOT", $0)
@@ -1585,12 +1585,12 @@ function use_files_macros(	i, n, t, a, l)
 	}
 
 	# replace back
-	gsub("%{_sysconfdir}/cron\.d", "/etc/cron.d")
-	gsub("%{_sysconfdir}/crontab\.d", "/etc/crontab.d")
-	gsub("%{_sysconfdir}/logrotate\.d", "/etc/logrotate.d")
-	gsub("%{_sysconfdir}/pam\.d", "/etc/pam.d")
-	gsub("%{_sysconfdir}/profile\.d", "/etc/profile.d")
-	gsub("%{_sysconfdir}/rc\.d", "/etc/rc.d")
+	gsub("%{_sysconfdir}/cron\\.d", "/etc/cron.d")
+	gsub("%{_sysconfdir}/crontab\\.d", "/etc/crontab.d")
+	gsub("%{_sysconfdir}/logrotate\\.d", "/etc/logrotate.d")
+	gsub("%{_sysconfdir}/pam\\.d", "/etc/pam.d")
+	gsub("%{_sysconfdir}/profile\\.d", "/etc/profile.d")
+	gsub("%{_sysconfdir}/rc\\.d", "/etc/rc.d")
 	gsub("%{_sysconfdir}/security", "/etc/security")
 	gsub("%{_sysconfdir}/skel", "/etc/skel")
 	gsub("%{_sysconfdir}/sysconfig", "/etc/sysconfig")
@@ -1683,7 +1683,7 @@ function use_files_macros(	i, n, t, a, l)
 	}
 
 	if (/%{_mandir}/) {
-		gsub("\.gz$", "*")
+		gsub("\\.gz$", "*")
 		gsub("%ext_man$", "*")
 	}
 
@@ -1736,8 +1736,8 @@ function use_files_macros(	i, n, t, a, l)
 function use_script_macros()
 {
 	if (gsub("/sbin/service", "%service")) {
-		sub(" >/dev/null 2>&1 \|\|:", "")
-		sub(" 2> /dev/null \|\| :", "")
+		sub(" >/dev/null 2>&1 \\|\\|:", "")
+		sub(" 2> /dev/null \\|\\| :", "")
 	}
 }
 
@@ -1786,7 +1786,7 @@ function cflags(var)
 	}
 
 	if (!/!\?debug/)
-		sub("\$RPM_OPT_FLAGS", "%{rpmcflags}")
+		sub("\\$RPM_OPT_FLAGS", "%{rpmcflags}")
 	return 1
 }
 
@@ -1807,13 +1807,13 @@ function unify_url(url)
 	sub("#.*", "", url)
 
 	# 1. unify domains
-	sub("^http://prdownloads\.sourceforge\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://download\.sf\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://download\.sourceforge\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://dl\.sourceforge\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://.*\.dl\.sourceforge\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://dl\.sf\.net/", "http://downloads.sourceforge.net/", url)
-	sub("^http://downloads\.sourceforge\.net/sourceforge/", "http://downloads.sourceforge.net/", url)
+	sub("^http://prdownloads\\.sourceforge\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://download\\.sf\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://download\\.sourceforge\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://dl\\.sourceforge\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://.*\\.dl\\.sourceforge\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://dl\\.sf\\.net/", "http://downloads.sourceforge.net/", url)
+	sub("^http://downloads\\.sourceforge\\.net/sourceforge/", "http://downloads.sourceforge.net/", url)
 
 	# 3. unify urls
 	if (url ~ /sourceforge.net/) {
@@ -1837,20 +1837,20 @@ function unify_url(url)
 		url = sprintf("http://downloads.sourceforge.net/%s/%s", substr(url, 42, RLENGTH - 41), matchstr(url, "[^/]+$"))
 	}
 
-	sub("^ftp://ftp\.gnome\.org/", "http://ftp.gnome.org/", url)
-	sub("^http://ftp\.gnome\.org/pub/gnome/", "http://ftp.gnome.org/pub/GNOME/", url)
+	sub("^ftp://ftp\\.gnome\\.org/", "http://ftp.gnome.org/", url)
+	sub("^http://ftp\\.gnome\\.org/pub/gnome/", "http://ftp.gnome.org/pub/GNOME/", url)
 
 	# apache urls
 	sub("^http://apache.zone-h.org/", "http://www.apache.org/dist/", url)
 
 	# gnu.org
-	sub("^ftp://ftp\.gnu\.org/", "http://ftp.gnu.org/", url)
-	sub("^http://ftp\.gnu\.org/pub/gnu/", "http://ftp.gnu.org/gnu/", url)
+	sub("^ftp://ftp\\.gnu\\.org/", "http://ftp.gnu.org/", url)
+	sub("^http://ftp\\.gnu\\.org/pub/gnu/", "http://ftp.gnu.org/gnu/", url)
 
 	# debian.org
-	sub("^ftp://ftp\.[^.]+\.debian\.org/", "ftp://ftp.debian.org/", url)
-	sub("^http://ftp\.[^.]+\.debian\.org/", "ftp://ftp.debian.org/", url)
-	sub("^ftp://ftp\.debian\.org/pub/debian/", "ftp://ftp.debian.org/debian/", url)
+	sub("^ftp://ftp\\.[^.]+\\.debian\\.org/", "ftp://ftp.debian.org/", url)
+	sub("^http://ftp\\.[^.]+\\.debian\\.org/", "ftp://ftp.debian.org/", url)
+	sub("^ftp://ftp\\.debian\\.org/pub/debian/", "ftp://ftp.debian.org/debian/", url)
 
 	return url
 }
@@ -1927,7 +1927,7 @@ function get_epoch(pkg, ver,	epoch)
 #	freetype = 2.0.0 -> correct
 #	freetype = 2.1.9 -> with epoch 1, as epoch 1 was added in 2.1.7
 
-	shell = "grep -o '^" pkg ":[^:]\+' ../PLD-doc/BuildRequires.txt | awk '{print $NF}'"
+	shell = "grep -o '^" pkg ":[^:]\\+' ../PLD-doc/BuildRequires.txt | awk '{print $NF}'"
 	shell | getline epoch
 	return epoch
 }
