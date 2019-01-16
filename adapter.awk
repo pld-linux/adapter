@@ -2,7 +2,7 @@
 #
 # Adapter adapts .spec files for PLD Linux.
 #
-# Copyright (C) 1999-2017 PLD-Team <feedback@pld-linux.org>
+# Copyright (C) 1999-2019 PLD-Team <feedback@pld-linux.org>
 # Authors:
 # 	Michał Kuratczyk <kura@pld.org.pl>
 # 	Sebastian Zagrodzki <s.zagrodzki@mimuw.edu.pl>
@@ -278,6 +278,8 @@ function b_makekey(a, b,	s) {
 /^%package/, (!/^%package/ && $0 ~ SECTIONS) {
 	# FIXME: this breaks \t indenting in preamble?
 	gsub(/\t/, " ")
+
+	sub(/%{python3_pkgversion}/, "3", $2)
 }
 
 ################
@@ -2438,12 +2440,16 @@ function replace_requires(field,   pkg) {
 	sub(/^mod_wsgi$/, "apache-mod_wsgi", $2)
 	sub(/^newt-python$/, "python-snack", $2)
 	sub(/^notify-python$/, "python-pynotify", $2)
+	sub(/^numpy$/, "python-numpy", $2)
+	sub(/^opencv-python$/, "python-opencv", $2)
 	sub(/^oxygen-icon-theme$/, "kde4-icons-oxygen", $2)
 	sub(/^pcsc-lite-ccid$/, "pcsc-driver-ccid", $2)
+	sub(/^protobuf-python$/, "python-protobuf", $2)
 	sub(/^pulseaudio-libs-devel$/, "pulseaudio-devel", $2)
 	sub(/^pyOpenSSL$/, "python-pyOpenSSL", $2)
 	sub(/^pycairo$/, "python-pycairo", $2)
 	sub(/^pyflakes$/, "python-pyflakes", $2)
+	sub(/^pygame$/, "python-pygame", $2)
 	sub(/^pygobject2$/, "python-pygobject", $2)
 	sub(/^pygobject3$/, "python-pygobject3", $2)
 	sub(/^pygobject3-devel$/, "python-pygobject3-common-devel", $2)
@@ -2497,11 +2503,13 @@ function replace_requires(field,   pkg) {
 	sub(/^qtlockedfile-devel$/, "QtLockedFile-devel", $2)
 	sub(/^qtsingleapplication-devel$/, "QtSingleApplication-devel", $2)
 	sub(/^rpm-python$/, "python-rpm", $2)
+	sub(/^scipy$/, "python-scipy", $2)
 	sub(/^sip-devel$/, "python-sip-devel", $2)
 	sub(/^tftp-server$/, "tftpdaemon", $2)
 	sub(/^tkinter$/, "python-tkinter", $2)
 	sub(/^urw-fonts$/, "fonts-Type1-urw", $2)
 	sub(/^webkitgtk3-devel$/, "gtk-webkit3-devel", $2)
+	sub(/^webkitgtk4$/, "gtk-webkit4", $2)
 	sub(/^xapian-bindings-python$/, "python-xapian", $2)
 	sub(/^xorg-x11-proto-devel$/, "xorg-proto-xproto-devel", $2)
 	sub(/^xorg-x11-server-sdk$/, "xorg-xserver-server-devel", $2)
@@ -2522,10 +2530,12 @@ function replace_requires(field,   pkg) {
 	sub(/^blkid-dev$/, "libblkid-devel", $2)
 	sub(/^ext2fs-dev$/, "e2fsprogs-devel", $2)
 	sub(/^libao-dev$/, "libao-devel", $2)
+	sub(/^libavahi-client-dev$/, "avahi-devel", $2)
 	sub(/^libboost-filesystem[0-9.]+-dev$/, "boost-devel", $2)
 	sub(/^libboost-program-options[0-9.]+-dev$/, "boost-devel", $2)
 	sub(/^libboost-regex[0-9.]+-dev$/, "boost-devel", $2)
 	sub(/^libboost-thread[0-9.]+-dev$/, "boost-devel", $2)
+	sub(/^libcups2-dev$/, "cups-devel", $2)
 	sub(/^libcurl4-openssl-dev$/, "curl-devel", $2)
 	sub(/^libdnet-dev$/, "libdnet-devel", $2)
 	sub(/^libesd0-dev$/, "esound-devel", $2)
