@@ -1,4 +1,5 @@
 Summary:	Adapt RPM .spec files to PLD Linux coding standard
+Summary(pl.UTF-8):	Adaptowanie plików .spec pakietów RPM do standardu kodowania PLD Linuksa
 Name:		adapter
 Version:	1.514
 Release:	1
@@ -16,6 +17,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 adapter adapts RPM .spec files for PLD Linux coding standard.
+
+%description -l pl.UTF-8
+adapter adaptuje pliki .spec pakietów RPM do standardu kodowania PLD
+Linuksa.
 
 %prep
 %setup -qcT
