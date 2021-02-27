@@ -12,10 +12,10 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-VERSION="1.514"
+VERSION="1.515"
 VERSIONSTRING="\
 Adapter adapts .spec files for PLD Linux.
-v$VERSION (C) 1999-2016 Free Penguins".
+v$VERSION (C) 1999-2021 Free Penguins".
 
 PROGRAM=${0##*/}
 dir=$(d=$0; [ -L "$d" ] && d=$(readlink -f "$d"); dirname "$d")
