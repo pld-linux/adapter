@@ -750,11 +750,11 @@ preamble == 1 {
 			next
 		}
 
-		replace_requires(field)
+		replace_requires()
 	}
 
 	if (field == "requires:" || field ~ /^requires\(/ || field == "suggests:") {
-		replace_requires(field)
+		replace_requires()
 	}
 
 
@@ -2242,7 +2242,7 @@ function replace_pythonegg(pkg,    cmd, line) {
 # }}}
 
 # {{{ replace_requires
-function replace_requires(field,   pkg) {
+function replace_requires(pkg) { # "pkg' is local variable, not an argument
 	# strip %{?_isa}
 	if ($2 ~ /_isa/) {
 		$2 = fixedsub("%{?_isa}", "", $2);
