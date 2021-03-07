@@ -753,6 +753,11 @@ preamble == 1 {
 		replace_requires()
 	}
 
+	if (field ~ /triggerpostun/) {
+		# rpm 4.16 does not have Requires(triggerpostun):
+		sub(/triggerpostun/, "post", $1)
+	}
+
 	if (field == "requires:" || field ~ /^requires\(/ || field == "suggests:") {
 		replace_requires()
 	}
