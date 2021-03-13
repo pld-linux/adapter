@@ -12,7 +12,7 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-VERSION="1.515"
+VERSION="1.516"
 VERSIONSTRING="\
 Adapter adapts .spec files for PLD Linux.
 v$VERSION (C) 1999-2021 Free Penguins".
