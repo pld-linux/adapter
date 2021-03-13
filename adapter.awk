@@ -33,7 +33,7 @@ BEGIN {
 	RPM_SECTIONS = "package|build|changelog|clean|description|install|post|posttrans|postun|pre|prep|pretrans|preun|triggerin|triggerpostun|triggerun|verifyscript|check"
 	SECTIONS = "^%(" RPM_SECTIONS ")"
 
-	VERSION="1.516"
+	VERSION="1.517"
 
 	PREAMBLE_TAGS = "(R|BR|Summary|Name|Version|Release|Epoch|License|Group|URL|BuildArch|BuildRoot|Obsoletes|Conflicts|Provides|ExclusiveArch|ExcludeArch|Pre[Rr]eq|(Build)?Requires|Suggests|Auto(Req|Prov))"
 
@@ -2243,11 +2243,6 @@ function replace_pythonegg(pkg,    cmd, line) {
 
 # {{{ replace_requires
 function replace_requires(pkg) { # "pkg' is local variable, not an argument
-	# strip %{?_isa}
-	if ($2 ~ /_isa/) {
-		$2 = fixedsub("%{?_isa}", "", $2);
-	}
-
 	# pkg-config -> package names
 	if (match($2, /pkgconfig\(([^)]+)\)/)) {
 		pkg = substr($2, RSTART + 10, RLENGTH - 11)
