@@ -788,11 +788,6 @@ preamble == 1 {
 		$1 = "URL:"
 	}
 
-	# suse
-	if (field ~ /recommends:/) {
-		$1 = "Suggests:"
-	}
-
 	if ($3 == "==" && $1 !~ /%/) {
 		$3 = "="
 	}
