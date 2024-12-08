@@ -372,11 +372,14 @@ function b_makekey(a, b,	s) {
 	if (/^%setup/ && /-n %{name}-%{version}( |$)/) {
 		$0 = fixedsub(" -n %{name}-%{version}", "", $0)
 	}
-	sub("^%patch ", "%patch0 ")
 
 	# fedora extras
 	if (/^%apply/) {
 		sub("^%apply -n", "%patch")
+	}
+
+	if (/^%patch[0-9]+/) {
+		sub("[0-9]+", " -P &")
 	}
 
 	# invalid in %prep
