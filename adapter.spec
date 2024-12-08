@@ -1,7 +1,7 @@
 Summary:	Adapt RPM .spec files to PLD Linux coding standard
 Summary(pl.UTF-8):	Adaptowanie plików .spec pakietów RPM do standardu kodowania PLD Linuksa
 Name:		adapter
-Version:	1.518
+Version:	1.519
 Release:	1
 License:	GPL
 Group:		Applications/File
