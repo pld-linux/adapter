@@ -379,8 +379,9 @@ function b_makekey(a, b,	s) {
 	}
 
 	if (/^%patch[0-9]+/) {
-		sub("[0-9]+", " -P &")
+		sub("[0-9]+", " -P&")
 	}
+	gsub("^%patch -P ", "%patch -P")
 
 	# invalid in %prep
 	sub("^rm -rf \\$RPM_BUILD_ROOT.*", "")
