@@ -1617,16 +1617,8 @@ function use_files_macros(	i, n, t, a, l)
 		}
 	}
 
-	if (/lib.+\.so\b/ && !/\.so$/ && !/^%attr.*/ && !/%exclude/) {
-		$0 = "%attr(755,root,root) " $0
-	}
-
-	if (/%{perl_vendorarch}.*\.so$/ && !/^%attr.*/) {
-		$0 = "%attr(755,root,root) " $0
-	}
-
-	# remove attrs from man pages
-	if (/%{_mandir}/ && /^%attr/) {
+	# remove attrs from man pages and libraries
+	if ((/%{_mandir}/ || /lib.+\.so/ || /%{perl_vendorarch}.*\.so$/) && /^%attr/) {
 		sub("^%attr\\(.*\\) *", "")
 	}
 
