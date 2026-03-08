@@ -551,6 +551,13 @@ function b_makekey(a, b,	s) {
 # %files #
 ##########
 /^%files/, (!/^%files/ && $0 ~ SECTIONS) {
+	if ($0 ~ /^%files/ && did_clean == 0) {
+		print "%clean"
+		print "rm -rf $RPM_BUILD_ROOT"
+		print ""
+		did_clean = 1
+	}
+
 	preamble = 0
 	did_files = 1
 
